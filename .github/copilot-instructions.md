@@ -1,0 +1,6 @@
+- [done] Scaffold the React project using Vite
+- [done] Install dependencies
+- [ ] Set up Supabase integration
+- [ ] Implement parking space management features
+- [ ] Add billing and printing functionality
+- [ ] Update README and documentation
