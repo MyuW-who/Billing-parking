@@ -11,7 +11,7 @@ const Dashboard = () => {
       const today = new Date();
       return billDate.toDateString() === today.toDateString();
     })
-    .reduce((sum, bill) => sum + bill.amount, 0);
+    .reduce((sum, bill) => sum + (bill.amount || 0), 0);
 
   const monthlyRevenue = billingHistory
     .filter(bill => {
@@ -22,7 +22,7 @@ const Dashboard = () => {
         billDate.getFullYear() === now.getFullYear()
       );
     })
-    .reduce((sum, bill) => sum + bill.amount, 0);
+    .reduce((sum, bill) => sum + (bill.amount || 0), 0);
 
   return (
     <div className="dashboard">
@@ -82,7 +82,7 @@ const Dashboard = () => {
                 <br />
                 <small>{bill.vehicleNumber} ({bill.parkingType})</small>
               </div>
-              <div className="activity-amount">${bill.amount.toFixed(2)}</div>
+              <div className="activity-amount">${(bill.amount || 0).toFixed(2)}</div>
               <div className="activity-date">
                 {new Date(bill.date).toLocaleString()}
               </div>

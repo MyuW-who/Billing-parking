@@ -30,6 +30,7 @@ export const ParkingProvider = ({ children }) => {
       checkInTime: null,
       monthlyStartDate: null,
       monthlyEndDate: null,
+      customAmount: null, // Manual custom amount
     }));
   });
 
@@ -70,6 +71,7 @@ export const ParkingProvider = ({ children }) => {
               checkInTime: vehicleData.parkingType === 'daily' ? new Date().toISOString() : null,
               monthlyStartDate: vehicleData.parkingType === 'monthly' ? vehicleData.monthlyStartDate : null,
               monthlyEndDate: vehicleData.parkingType === 'monthly' ? vehicleData.monthlyEndDate : null,
+              customAmount: vehicleData.customAmount || null,
             }
           : space
       )
@@ -90,6 +92,7 @@ export const ParkingProvider = ({ children }) => {
               checkInTime: null,
               monthlyStartDate: null,
               monthlyEndDate: null,
+              customAmount: null,
             }
           : space
       )
@@ -98,6 +101,11 @@ export const ParkingProvider = ({ children }) => {
 
   const calculateBill = (space) => {
     if (!space.isOccupied) return 0;
+
+    // If custom amount is set, use it
+    if (space.customAmount !== null && space.customAmount !== undefined) {
+      return parseFloat(space.customAmount) || 0;
+    }
 
     if (space.parkingType === 'monthly') {
       return pricing.monthly;
@@ -131,6 +139,7 @@ export const ParkingProvider = ({ children }) => {
       checkOutTime: new Date().toISOString(),
       monthlyStartDate: space.monthlyStartDate,
       monthlyEndDate: space.monthlyEndDate,
+      customAmount: space.customAmount,
       amount,
     };
 

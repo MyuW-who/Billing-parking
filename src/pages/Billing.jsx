@@ -172,10 +172,17 @@ const Billing = () => {
                       <span>Duration:</span>
                       <strong>{formatDuration(selectedSpace.checkInTime, new Date().toISOString())}</strong>
                     </div>
-                    <div className="preview-row">
-                      <span>Rate:</span>
-                      <strong>${pricing.daily.hourly}/hour (max ${pricing.daily.daily}/day)</strong>
-                    </div>
+                    {selectedSpace.customAmount ? (
+                      <div className="preview-row">
+                        <span>Custom Amount:</span>
+                        <strong className="custom-badge">${parseFloat(selectedSpace.customAmount).toFixed(2)}</strong>
+                      </div>
+                    ) : (
+                      <div className="preview-row">
+                        <span>Rate:</span>
+                        <strong>${pricing.daily.hourly}/hour (max ${pricing.daily.daily}/day)</strong>
+                      </div>
+                    )}
                   </>
                 )}
                 {selectedSpace.parkingType === 'monthly' && (
@@ -187,10 +194,17 @@ const Billing = () => {
                         {new Date(selectedSpace.monthlyEndDate).toLocaleDateString()}
                       </strong>
                     </div>
-                    <div className="preview-row">
-                      <span>Rate:</span>
-                      <strong>${pricing.monthly}/month</strong>
-                    </div>
+                    {selectedSpace.customAmount ? (
+                      <div className="preview-row">
+                        <span>Custom Amount:</span>
+                        <strong className="custom-badge">${parseFloat(selectedSpace.customAmount).toFixed(2)}</strong>
+                      </div>
+                    ) : (
+                      <div className="preview-row">
+                        <span>Rate:</span>
+                        <strong>${pricing.monthly}/month</strong>
+                      </div>
+                    )}
                   </>
                 )}
               </div>
@@ -321,7 +335,7 @@ const Billing = () => {
                       {bill.parkingType}
                     </span>
                   </td>
-                  <td className="amount">${bill.amount.toFixed(2)}</td>
+                  <td className="amount">${(bill.amount || 0).toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>

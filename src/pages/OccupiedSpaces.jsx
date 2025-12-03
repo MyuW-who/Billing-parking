@@ -106,10 +106,17 @@ const OccupiedSpaces = () => {
                     <label>Duration:</label>
                     <span>{formatDuration(selectedSpace.checkInTime)}</span>
                   </div>
-                  <div className="detail-item">
-                    <label>Current Bill:</label>
-                    <span className="amount">${calculateBill(selectedSpace).toFixed(2)}</span>
-                  </div>
+                  {selectedSpace.customAmount ? (
+                    <div className="detail-item">
+                      <label>Custom Amount:</label>
+                      <span className="amount">${parseFloat(selectedSpace.customAmount).toFixed(2)}</span>
+                    </div>
+                  ) : (
+                    <div className="detail-item">
+                      <label>Current Bill:</label>
+                      <span className="amount">${calculateBill(selectedSpace).toFixed(2)}</span>
+                    </div>
+                  )}
                 </>
               )}
 
@@ -123,10 +130,17 @@ const OccupiedSpaces = () => {
                     <label>End Date:</label>
                     <span>{new Date(selectedSpace.monthlyEndDate).toLocaleDateString()}</span>
                   </div>
-                  <div className="detail-item">
-                    <label>Monthly Fee:</label>
-                    <span className="amount">${calculateBill(selectedSpace).toFixed(2)}</span>
-                  </div>
+                  {selectedSpace.customAmount ? (
+                    <div className="detail-item">
+                      <label>Custom Amount:</label>
+                      <span className="amount">${parseFloat(selectedSpace.customAmount).toFixed(2)}</span>
+                    </div>
+                  ) : (
+                    <div className="detail-item">
+                      <label>Monthly Fee:</label>
+                      <span className="amount">${calculateBill(selectedSpace).toFixed(2)}</span>
+                    </div>
+                  )}
                 </>
               )}
             </div>

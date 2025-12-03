@@ -12,13 +12,18 @@ const AvailableSpaces = () => {
     parkingType: 'daily',
     monthlyStartDate: '',
     monthlyEndDate: '',
+    customAmount: '',
+    useCustomAmount: false,
   });
 
   const availableSpaces = parkingSpaces.filter(space => !space.isOccupied);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? checked : value 
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -33,6 +38,8 @@ const AvailableSpaces = () => {
         parkingType: 'daily',
         monthlyStartDate: '',
         monthlyEndDate: '',
+        customAmount: '',
+        useCustomAmount: false,
       });
     }
   };
@@ -50,6 +57,8 @@ const AvailableSpaces = () => {
       parkingType: 'daily',
       monthlyStartDate: '',
       monthlyEndDate: '',
+      customAmount: '',
+      useCustomAmount: false,
     });
   };
 
@@ -148,6 +157,35 @@ const AvailableSpaces = () => {
                     />
                   </div>
                 </>
+              )}
+
+              <div className="form-group custom-amount-section">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="useCustomAmount"
+                    checked={formData.useCustomAmount}
+                    onChange={handleInputChange}
+                  />
+                  <span>Set Custom Amount</span>
+                </label>
+              </div>
+
+              {formData.useCustomAmount && (
+                <div className="form-group">
+                  <label>Custom Amount ($) *</label>
+                  <input
+                    type="number"
+                    name="customAmount"
+                    value={formData.customAmount}
+                    onChange={handleInputChange}
+                    placeholder="Enter custom amount"
+                    min="0"
+                    step="0.01"
+                    required
+                  />
+                  <small className="form-hint">This will override the standard pricing</small>
+                </div>
               )}
 
               <div className="modal-actions">
